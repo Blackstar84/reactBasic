@@ -32,37 +32,6 @@ const Total = ({totalCash})=>{
   )
 }
 
-const ProductForm = ({index,onCreateProduct}) => {
-
-  const [name,setName] = useState("");
-  const [price,setPrice] = useState(0);
-
-  const createProduct=(event)=>{
-    event.preventDefault();
-    //alert("Name: " + name + " - Price: " + price);
-    const product = {id:index,name,price};
-    onCreateProduct(product);
-
-    //Reset the form
-    setName("");
-    setPrice(0);
-  }
-
-  return(
-    <form>
-        <label>Product Name</label>
-        <input type="text" value={name}
-        onChange={(e)=> setName(e.target.value)} /><br/><br/>
-
-        <label>Product Price</label>
-        <input type="number" value={price} onChange={(e)=> setPrice(e.target.value)} /><br/><br/>
-
-        <button onClick={createProduct}>Create</button>
-        <hr/>
-    </form>
-  )
-}
-
 const ProductList = ()=>{
 
   const [total, setTotal] = useState(0);
@@ -73,12 +42,8 @@ const ProductList = ()=>{
     {id: 3, name: "Nokia", price: 65},
   ]);
 
-  const addProduct =(product)=>{
-    setProducts([...products, product]);
-  }
-
   const calculateTotal = (price) =>{
-    setTotal(total + parseInt(price));
+    setTotal(total + price);
   }
 
   const showProduct=(name)=>{
@@ -86,7 +51,6 @@ const ProductList = ()=>{
   }
   return (
     <div>
-      <ProductForm index={products.length} onCreateProduct={addProduct}/>
       {products.map((p)=>(
           <App key={p.id} name={p.name} price={p.price} onShowProduct={showProduct} onCalculatedTotal={calculateTotal} />
       ))}
